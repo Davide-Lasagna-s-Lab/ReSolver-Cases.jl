@@ -26,7 +26,9 @@ matrices, discrete adjoints and weights. `Nx`, `Nz`, `Nt` are odd Fourier resolu
 """
 const ChannelGrid{T, S} = TensorProductGrid{T, S, 4, CHANNEL_AXES, CHANNEL_FFT_ORDER}
 
-function ChannelGrid(Nx::Int, Ny::Int, Nz::Int;
+function ChannelGrid(   Nx::Int,
+                        Ny::Int,
+                        Nz::Int;
                         Nt::Int=1,
                          α::Real=1,
                          β::Real=1,
@@ -45,10 +47,25 @@ function ChannelGrid(Nx::Int, Ny::Int, Nz::Int;
     return ChannelGrid(y, Nx, Nz, Nt, α, β, Dy, Dy2, Dya, Dy2a, w, T)
 end
 
-ChannelGrid(y, Nx, Nz, Nt, α, β, Dy, Dy2, Dya, Dy2a, wy, ::Type{T}=Float64) where {T} =
-    TensorProductGrid((y,), (Dy,), (Dy2,), (Dya,), (Dy2a,), (wy,),
-                      (α, β, 1),
-                      (length(y), Nx, Nz, Nt),
-                      CHANNEL_AXES,
-                      CHANNEL_FFT_ORDER,
-                      T)
+function ChannelGrid(   y::AbstractVector,
+                       Nx::Int,
+                       Nz::Int,
+                       Nt::Int,
+                        α::Real,
+                        β::Real,
+                       Dy::AbstractMatrix,
+                      Dy2::AbstractMatrix,
+                      Dya::AbstractMatrix,
+                     Dy2a::AbstractMatrix,
+                       wy::AbstractVector,
+                         ::Type{T}=Float64) where {T<:Real}
+
+    # ---- grid of the given data, converted to T ----
+    g = TensorProductGrid((y,), (Dy,), (Dy2,), (Dya,), (Dy2a,), (wy,),
+                          (α, β, 1),
+                          (length(y), Nx, Nz, Nt),
+                          CHANNEL_AXES,
+                          CHANNEL_FFT_ORDER)
+
+    return convert(T, g)
+end

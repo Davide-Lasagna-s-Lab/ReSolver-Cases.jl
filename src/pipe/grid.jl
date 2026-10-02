@@ -30,7 +30,9 @@ azimuthal period is `2π` and `α = 2π/Lz`.
 """
 const PipeGrid{T, S} = TensorProductGrid{T, S, 4, PIPE_AXES, PIPE_FFT_ORDER}
 
-function PipeGrid(Nr::Int, Nθ::Int, Nz::Int;
+function PipeGrid(   Nr::Int,
+                     Nθ::Int,
+                     Nz::Int;
                      Nt::Int=1,
                       α::Real=1,
                       R::Real=1,

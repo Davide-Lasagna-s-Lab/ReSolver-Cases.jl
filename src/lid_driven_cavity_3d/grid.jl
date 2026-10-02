@@ -25,7 +25,7 @@ and `z`, which share the same points, operators and weights. `Nt` is an odd temp
 const LidDrivenCavity3DGrid{T, S} =
     TensorProductGrid{T, S, 4, LID_DRIVEN_CAVITY_3D_AXES, LID_DRIVEN_CAVITY_3D_FFT_ORDER}
 
-function LidDrivenCavity3DGrid(N::Int;
+function LidDrivenCavity3DGrid(    N::Int;
                                   Nt::Int=1,
                                  lim::NTuple{2, <:Real}=(0, 1),
                                 dist::FDGrids.AbstractGridDistribution=FDGrids.UniformGrid(),

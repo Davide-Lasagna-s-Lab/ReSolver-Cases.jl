@@ -24,7 +24,8 @@ resolutions and `α = 2π/Lz`.
 """
 const SquareDuctGrid{T, S} = TensorProductGrid{T, S, 4, SQUARE_DUCT_AXES, SQUARE_DUCT_FFT_ORDER}
 
-function SquareDuctGrid(N::Int, Nz::Int;
+function SquareDuctGrid(    N::Int,
+                           Nz::Int;
                            Nt::Int=1,
                             α::Real=1,
                          dist::FDGrids.AbstractGridDistribution=FDGrids.GaussLobattoGrid(),

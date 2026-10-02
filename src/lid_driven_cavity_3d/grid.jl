@@ -1,11 +1,11 @@
 # Cubic three-dimensional cavity: x, y and z bounded and sharing one discretisation, optional
-# periodic time or phase t. Stored as (x, y, z, t).
+# periodic time phase s ∈ [0, 2π). Stored as (x, y, z, s).
 #
 #     g = LidDrivenCavity3DGrid(49; Nt=1, width=7)
-#     x, y, z, t = points(g)
+#     x, y, z, s = points(g)
 
-const LID_DRIVEN_CAVITY_3D_AXES               = (1, 2, 3, 4) # (x, y, z, t) -> storage
-const LID_DRIVEN_CAVITY_3D_FFT_ORDER          = (4,)         # t
+const LID_DRIVEN_CAVITY_3D_AXES               = (1, 2, 3, 4) # (x, y, z, s) -> storage
+const LID_DRIVEN_CAVITY_3D_FFT_ORDER          = (4,)         # s
 const LID_DRIVEN_CAVITY_3D_INHOMOGENEOUS_DIMS = (1, 2, 3)    # x, y, z
 
 """
@@ -19,7 +19,7 @@ const AbstractLidDrivenCavity3DGrid{T} =
 """
     LidDrivenCavity3DGrid(N; Nt=1, lim=(0, 1), dist=FDGrids.UniformGrid(), width=5, T=Float64)
 
-Cubic cavity stored as `(x, y, z, t)`, with `N` points of distribution `dist` on `lim` in `x`, `y`
+Cubic cavity stored as `(x, y, z, s)`, with `N` points of distribution `dist` on `lim` in `x`, `y`
 and `z`, which share the same points, operators and weights. `Nt` is an odd temporal resolution.
 """
 const LidDrivenCavity3DGrid{T, S} =
@@ -42,7 +42,7 @@ function LidDrivenCavity3DGrid(    N::Int;
     # ---- assemble ----
     return TensorProductGrid((x, x, x), (D₁, D₁, D₁), (D₂, D₂, D₂),
                              (D₁⁺, D₁⁺, D₁⁺), (D₂⁺, D₂⁺, D₂⁺), (w, w, w),
-                             (1,),
+                             (),
                              (N, N, N, Nt),
                              LID_DRIVEN_CAVITY_3D_AXES,
                              LID_DRIVEN_CAVITY_3D_FFT_ORDER)

@@ -19,7 +19,7 @@
                         periodic_profile(t + 0.4)
         û, v̂ = FFT(Field(g, u)), FFT(Field(g, v))
 
-        for derivative! in (ddr!, ddθ!, ddz!, ddt!)
+        for derivative! in (ddr!, ddθ!, ddz!, dds!)
             Du  = derivative!(FTField(g), û)
             D⁺v = derivative!(FTField(g), v̂, DiscreteAdjoint())
             @test dot(Du, v̂) ≈ dot(û, D⁺v) atol=5e-12 rtol=5e-12

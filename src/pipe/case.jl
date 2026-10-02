@@ -48,12 +48,12 @@ with ``\boldsymbol{u}=(u_r,u_\theta,u_z)``, radius ``R``, centreline velocity of
 profile as velocity scale, and ``Re = U_c R/\nu``. The default forcing ``f = 4/(Re R^2)`` makes the
 Hagen–Poiseuille profile ``U_z = 1 - (r/R)^2`` an exact equilibrium.
 
-`base_flow` is added only to the steady zero `(θ, z, t)` Fourier mode; every nonzero component must
+`base_flow` is added only to the steady zero `(θ, z, s)` Fourier mode; every nonzero component must
 have shape `(Nr,)`. The grid and equation constructor do not impose wall values.
 
 # Arguments
 
-- `g`: pipe grid stored as `(r, θ, z, t)`.
+- `g`: pipe grid stored as `(r, θ, z, s)`.
 - `Re`: Reynolds number ``U_c R/\nu``, multiplying viscosity as ``1/Re``.
 
 # Keyword arguments

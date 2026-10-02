@@ -23,7 +23,7 @@
         for (derivative!, exact) in ((ddx!, ux), (ddy!, uy), (ddz!, uz))
             @test derivative!(FTField(g), û) ≈ FFT(Field(g, exact)) atol=3e-11 rtol=3e-11
         end
-        @test ddt!(FTField(g), û) ≈ FFT(Field(g, ut)) atol=3e-7 rtol=3e-7
+        @test dds!(FTField(g), û) ≈ FFT(Field(g, ut)) atol=3e-7 rtol=3e-7
         @test laplacian!(FTField(g), û) ≈ FFT(Field(g, Δu)) atol=3e-7 rtol=3e-7
     end
 
@@ -46,7 +46,7 @@
                          dual_bounded_profile(z, lim) * periodic_profile(t + 0.4)
         û, v̂ = FFT(Field(g, u)), FFT(Field(g, v))
 
-        for derivative! in (ddx!, ddy!, ddz!, ddt!)
+        for derivative! in (ddx!, ddy!, ddz!, dds!)
             Du = derivative!(FTField(g), û)
             D⁺v = derivative!(FTField(g), v̂, DiscreteAdjoint())
             @test dot(Du, v̂) ≈ dot(û, D⁺v) atol=5e-12 rtol=5e-12

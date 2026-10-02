@@ -32,7 +32,7 @@ end
 
     @testset "ChannelGrid" begin
         g = ChannelGrid(9, 17, 7; Nt=3, α=1.5, β=2.5, width=5)
-        y, x, z, t = points(g)
+        y, x, z, s = points(g)
 
         # ---- layout ----
         @test g isa AbstractChannelGrid
@@ -44,7 +44,7 @@ end
         @test extrema(y) == (-1.0, 1.0)
         @test x[2] ≈ 2π / 1.5 / 9
         @test z[2] ≈ 2π / 2.5 / 7
-        @test t[2] ≈ 2π / 3
+        @test s[2] ≈ 2π / 3
         @test sum(ReSolverFlowsBase.weights(g)) ≈ 2
 
         # ---- exact derivatives of a cubic ----
@@ -60,7 +60,7 @@ end
 
     @testset "LidDrivenCavity2DGrid" begin
         g = LidDrivenCavity2DGrid(13; Nt=3, width=5)
-        x, y, t = points(g)
+        x, y, s = points(g)
 
         @test g isa AbstractLidDrivenCavity2DGrid
         @test size(g) == (13, 13, 3)
@@ -83,7 +83,7 @@ end
 
     @testset "SquareDuctGrid" begin
         g = SquareDuctGrid(13, 7; Nt=3, α=0.5, width=5)
-        x, y, z, t = points(g)
+        x, y, z, s = points(g)
 
         @test g isa AbstractSquareDuctGrid
         @test size(g) == (13, 13, 7, 3)
@@ -94,7 +94,7 @@ end
 
     @testset "PipeGrid" begin
         g = PipeGrid(16, 9, 7; Nt=3, α=1.5, R=2)
-        r, θ, z, t = points(g)
+        r, θ, z, s = points(g)
 
         @test g isa AbstractPipeGrid
         @test size(g) == (16, 9, 7, 3)

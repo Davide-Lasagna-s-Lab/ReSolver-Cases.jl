@@ -1,11 +1,11 @@
 # Square two-dimensional cavity: x and y bounded and sharing one discretisation, optional
-# periodic time or phase t. Stored as (x, y, t).
+# periodic time phase s ∈ [0, 2π). Stored as (x, y, s).
 #
 #     g = LidDrivenCavity2DGrid(65; Nt=1, width=7)
-#     x, y, t = points(g)
+#     x, y, s = points(g)
 
-const LID_DRIVEN_CAVITY_2D_AXES               = (1, 2, nothing, 3) # (x, y, z, t) -> storage
-const LID_DRIVEN_CAVITY_2D_FFT_ORDER          = (3,)               # t
+const LID_DRIVEN_CAVITY_2D_AXES               = (1, 2, nothing, 3) # (x, y, z, s) -> storage
+const LID_DRIVEN_CAVITY_2D_FFT_ORDER          = (3,)               # s
 const LID_DRIVEN_CAVITY_2D_INHOMOGENEOUS_DIMS = (1, 2)             # x, y
 
 """
@@ -19,7 +19,7 @@ const AbstractLidDrivenCavity2DGrid{T} =
 """
     LidDrivenCavity2DGrid(N; Nt=1, lim=(0, 1), dist=FDGrids.UniformGrid(), width=5, T=Float64)
 
-Square cavity stored as `(x, y, t)`, with `N` points of distribution `dist` on `lim` in both `x`
+Square cavity stored as `(x, y, s)`, with `N` points of distribution `dist` on `lim` in both `x`
 and `y`, which share the same points, operators and weights. `Nt` is an odd temporal resolution.
 """
 const LidDrivenCavity2DGrid{T, S} =
@@ -41,7 +41,7 @@ function LidDrivenCavity2DGrid(    N::Int;
 
     # ---- assemble ----
     return TensorProductGrid((x, x), (D₁, D₁), (D₂, D₂), (D₁⁺, D₁⁺), (D₂⁺, D₂⁺), (w, w),
-                             (1,),
+                             (),
                              (N, N, Nt),
                              LID_DRIVEN_CAVITY_2D_AXES,
                              LID_DRIVEN_CAVITY_2D_FFT_ORDER)

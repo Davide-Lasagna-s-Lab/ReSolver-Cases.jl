@@ -1,11 +1,11 @@
 # Square duct: cross-section x, y bounded on [0, 1] and sharing one discretisation, periodic
-# streamwise z, optional periodic time or phase t. Stored as (x, y, z, t).
+# streamwise z, optional periodic time phase s ∈ [0, 2π). Stored as (x, y, z, s).
 #
 #     g = SquareDuctGrid(49, 63; Nt=1, α=0.5, width=7)
-#     x, y, z, t = points(g)
+#     x, y, z, s = points(g)
 
-const SQUARE_DUCT_AXES               = (1, 2, 3, 4) # (x, y, z, t) -> storage
-const SQUARE_DUCT_FFT_ORDER          = (3, 4)       # z, t
+const SQUARE_DUCT_AXES               = (1, 2, 3, 4) # (x, y, z, s) -> storage
+const SQUARE_DUCT_FFT_ORDER          = (3, 4)       # z, s
 const SQUARE_DUCT_INHOMOGENEOUS_DIMS = (1, 2)       # x, y
 
 """
@@ -18,7 +18,7 @@ const AbstractSquareDuctGrid{T} = AbstractGrid{T, 4, SQUARE_DUCT_AXES, SQUARE_DU
 """
     SquareDuctGrid(N, Nz; Nt=1, α=1, dist=FDGrids.GaussLobattoGrid(), width=5, T=Float64)
 
-Square duct stored as `(x, y, z, t)`, with `N` points of distribution `dist` on `[0, 1]` in `x`
+Square duct stored as `(x, y, z, s)`, with `N` points of distribution `dist` on `[0, 1]` in `x`
 and `y`, which share the same points, operators and weights. `Nz`, `Nt` are odd Fourier
 resolutions and `α = 2π/Lz`.
 """
@@ -41,7 +41,7 @@ function SquareDuctGrid(    N::Int,
 
     # ---- assemble ----
     return TensorProductGrid((x, x), (D₁, D₁), (D₂, D₂), (D₁⁺, D₁⁺), (D₂⁺, D₂⁺), (w, w),
-                             (α, 1),
+                             (α,),
                              (N, N, Nz, Nt),
                              SQUARE_DUCT_AXES,
                              SQUARE_DUCT_FFT_ORDER)

@@ -22,7 +22,7 @@
     @testset verbose=true "Analytical derivatives and Laplacian                        " begin
         û = FFT(Field(g, u))
         @test ddy!(FTField(g), û) ≈ FFT(Field(g, uy)) atol=3e-11 rtol=3e-11
-        for (derivative!, exact) in ((ddx!, ux), (ddz!, uz), (ddt!, ut))
+        for (derivative!, exact) in ((ddx!, ux), (ddz!, uz), (dds!, ut))
             @test derivative!(FTField(g), û) ≈ FFT(Field(g, exact)) atol=3e-7 rtol=3e-7
         end
         @test laplacian!(FTField(g), û) ≈ FFT(Field(g, Δu)) atol=3e-7 rtol=3e-7
@@ -47,7 +47,7 @@
                          periodic_profile(β * z + 0.3) * periodic_profile(t + 0.4)
         û, v̂ = FFT(Field(g, u)), FFT(Field(g, v))
 
-        for derivative! in (ddx!, ddy!, ddz!, ddt!)
+        for derivative! in (ddx!, ddy!, ddz!, dds!)
             Du = derivative!(FTField(g), û)
             D⁺v = derivative!(FTField(g), v̂, DiscreteAdjoint())
             @test dot(Du, v̂) ≈ dot(û, D⁺v) atol=5e-12 rtol=5e-12
